@@ -128,7 +128,6 @@
             border-radius: 8px;
             padding: 25mm 20mm;
             width: 210mm;
-            min-height: 297mm;
             max-width: 210mm;
             margin: 0 auto;
             overflow: auto;
@@ -257,6 +256,7 @@
             font-family: 'Times New Roman', 'Times', serif;
             line-height: 1.5;
             font-weight: 500;
+            page-break-after: avoid !important;
         }
 
         .footer-line {
@@ -270,7 +270,10 @@
                 print-color-adjust: exact !important;
             }
 
-            html,
+            html {
+                height: auto !important;
+            }
+
             body {
                 background: white !important;
                 margin: 0 !important;
@@ -279,12 +282,20 @@
                 overflow: visible !important;
             }
 
+            body::after {
+                content: "" !important;
+                display: block !important;
+                height: 0 !important;
+                clear: both !important;
+                page-break-after: avoid !important;
+            }
+
             .wrap {
                 display: block !important;
                 padding: 0 !important;
                 max-width: none !important;
                 margin: 0 !important;
-                width: 100% !important;
+                width: auto !important;
                 height: auto !important;
             }
 
@@ -292,27 +303,41 @@
                 display: none !important;
             }
 
+            #docPanel {
+                display: block !important;
+            }
+
             .doc {
+                border: none !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
-                min-height: auto !important;
+                min-height: initial !important;
                 height: auto !important;
                 padding: 25mm 20mm !important;
                 width: 210mm !important;
                 max-width: 210mm !important;
-                margin: 0 auto !important;
-                display: block !important;
+                margin: 0 !important;
                 background: white !important;
                 color: black !important;
                 overflow: visible !important;
-                page-break-after: auto !important;
-                page-break-inside: auto !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                position: relative !important;
+            }
+
+            .doc::after {
+                content: "" !important;
+                display: block !important;
+                height: 0 !important;
+                clear: both !important;
+                page-break-after: avoid !important;
             }
 
             .doc .footer {
                 border-top: none !important;
                 margin-top: 20px !important;
                 page-break-inside: avoid !important;
+                page-break-after: avoid !important;
             }
 
             .footer-line {
@@ -329,18 +354,6 @@
             @page {
                 size: A4;
                 margin: 0;
-            }
-
-            /* Sadece ilk sayfa için özel ayar */
-            @page :first {
-                margin: 0;
-            }
-
-            /* Son sayfadan sonra boş sayfa oluşmasını engelle */
-            html::after,
-            body::after {
-                content: none !important;
-                display: none !important;
             }
         }
     </style>
@@ -421,6 +434,8 @@
                 Tel: 0.232. 464 47 11 (PBX) Fax: 0.232 464 18 31 – 464 32 71<br />
                 Telex: 51133 Tic. Sic. No.:Merkez 89899
             </div>
+            <!-- Boş sayfa engelleyici -->
+            <div style="height: 1px; overflow: hidden; page-break-after: avoid !important; visibility: hidden;">&nbsp;</div>
         </section>
     </div>
 
@@ -567,6 +582,65 @@
             // Önce render'ı çalıştır
             render();
 
+            // Yazdırma için özel stil ekle
+            const style = document.createElement('style');
+            style.id = 'print-style';
+            style.textContent = `
+                @media print {
+                    @page {
+                        size: A4;
+                        margin: 0;
+                    }
+                    
+                    html {
+                        height: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+                    
+                    body {
+                        height: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        overflow: hidden !important;
+                    }
+                    
+                    .wrap {
+                        height: fit-content !important;
+                        min-height: auto !important;
+                        max-height: none !important;
+                    }
+                    
+                    .doc {
+                        height: fit-content !important;
+                        min-height: auto !important;
+                        max-height: none !important;
+                        page-break-after: avoid !important;
+                        page-break-inside: auto !important;
+                        position: relative !important;
+                        overflow: hidden !important;
+                        margin-bottom: 0 !important;
+                        padding-bottom: 20mm !important;
+                    }
+                    
+                    /* Son element'ten sonra sayfa kesmeyi engelle */
+                    .doc > *:last-child {
+                        page-break-after: avoid !important;
+                        margin-bottom: 0 !important;
+                        padding-bottom: 0 !important;
+                    }
+                    
+                    /* Boş sayfa oluşmasını engelle */
+                    .doc::after {
+                        content: "" !important;
+                        display: block !important;
+                        height: 0 !important;
+                        page-break-after: avoid !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
             // Belgeyi yazdırmadan önce yükseklik ayarlarını temizle
             const docElement = document.querySelector('.doc');
             
@@ -574,10 +648,23 @@
             docElement.style.removeProperty('height');
             docElement.style.removeProperty('maxHeight');
             docElement.style.removeProperty('minHeight');
+            
+            // Belge sonuna boş sayfa engelleyici ekle
+            const pageBreakPreventer = document.createElement('div');
+            pageBreakPreventer.style.cssText = 'height: 0; overflow: hidden; page-break-after: avoid; position: absolute; bottom: 0;';
+            docElement.appendChild(pageBreakPreventer);
 
             // Kısa bir gecikme sonra print
             setTimeout(() => {
                 window.print();
+                // Yazdırma sonrası temizlik
+                setTimeout(() => {
+                    const printStyle = document.getElementById('print-style');
+                    if (printStyle) printStyle.remove();
+                    if (pageBreakPreventer && pageBreakPreventer.parentNode) {
+                        pageBreakPreventer.remove();
+                    }
+                }, 500);
             }, 100);
         }
     </script>
