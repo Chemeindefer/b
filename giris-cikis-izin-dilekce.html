@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş-Çıkış İzin Dilekçesi — Form & Önizleme</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --card: #131a22;
+            --muted: #8aa0b3;
+            --text: #e6eef7;
+            --accent: #39c3a5;
+            --yellow: #fff59d;
+            --border: #223042;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 20px;
+            padding: 20px;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25)
+        }
+
+        h1 {
+            font-size: 18px;
+            margin: 0 0 12px
+        }
+
+        h2 {
+            font-size: 14px;
+            margin: 16px 0 8px;
+            color: var(--muted);
+            letter-spacing: .2px
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin: 10px 0 6px
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #0e141b;
+            color: var(--text);
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #6f8396
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #0f1720;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn.small {
+            padding: 6px 10px;
+            font-size: 12px
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .row>input {
+            flex: 1
+        }
+
+        .row>input.tc {
+            flex: 0 0 160px
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 14px 0
+        }
+
+        .doc {
+            background: white;
+            color: #1a1a1a;
+            border-radius: 8px;
+            padding: 25mm 20mm;
+            width: 210mm;
+            max-width: 210mm;
+            margin: 0 auto;
+            overflow: auto;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.6;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .doc p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 18px 0;
+            text-align: justify;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-indent: 1.2em;
+        }
+
+        .doc h3 {
+            margin: 0;
+            text-align: center;
+            letter-spacing: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 16px;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .doc h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: #000;
+        }
+
+        .doc .subh {
+            font-size: 17px;
+            font-weight: 600;
+            text-align: center;
+            margin: 0 0 32px;
+            color: #1a1a1a;
+            line-height: 1.5;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .doc .addr {
+            margin: 32px 0;
+            font-size: 14px;
+            line-height: 1.8;
+            font-family: 'Times New Roman', 'Times', serif;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .doc .right {
+            float: right;
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Times New Roman', 'Times', serif;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid #000;
+            padding: 8px 12px;
+            background: #f8f9fa;
+        }
+
+        .hl {
+            background: #f0f4f8;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #000;
+            border: 1px solid #d1d9e0;
+            font-size: 14px;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+            @media print {
+                .hl {
+                    background: #f0f4f8 !important;
+                    border: 1px solid #000 !important;
+                    padding: 3px 6px !important;
+                    border-radius: 4px !important;
+                    font-weight: 700 !important;
+                }
+            }
+
+        .section-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 36px 0 20px;
+            font-size: 16px;
+            text-align: center;
+            color: #000;
+            letter-spacing: 1.5px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+            font-family: 'Times New Roman', 'Times', serif;
+            position: relative;
+            page-break-inside: avoid;
+        }
+
+        ul.clean {
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        ul.clean li {
+            margin: 10px 0;
+            padding: 6px 0;
+            font-size: 14px;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.8;
+            font-weight: 500;
+            border-bottom: 1px dotted #e0e0e0;
+            page-break-inside: avoid;
+        }
+        
+        ul.clean li:last-child {
+            border-bottom: none;
+        }
+
+        .sign {
+            margin-top: 40px;
+            text-align: right;
+            font-style: italic;
+            font-size: 15px;
+            font-family: 'Times New Roman', 'Times', serif;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: 0.5px;
+        }
+
+        .footer {
+            margin-top: 48px;
+            font-size: 12px;
+            color: #444;
+            text-align: center;
+            padding: 20px;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.6;
+            font-weight: 500;
+            page-break-after: avoid !important;
+            page-break-inside: avoid !important;
+            border-top: 2px solid #e0e0e0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .footer-line {
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .doc-header {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 3px double #000;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html {
+                height: auto !important;
+            }
+
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            body::after {
+                content: "" !important;
+                display: block !important;
+                height: 0 !important;
+                clear: both !important;
+                page-break-after: avoid !important;
+            }
+
+            .wrap {
+                display: block !important;
+                padding: 0 !important;
+                max-width: none !important;
+                margin: 0 !important;
+                width: auto !important;
+                height: auto !important;
+            }
+
+            .panel {
+                display: none !important;
+            }
+
+            #docPanel {
+                display: block !important;
+            }
+
+            .doc {
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                min-height: initial !important;
+                height: auto !important;
+                padding: 25mm 20mm !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
+                margin: 0 !important;
+                background: white !important;
+                color: black !important;
+                overflow: visible !important;
+                page-break-after: avoid !important;
+                page-break-inside: auto !important;
+                position: relative !important;
+            }
+            
+            /* Sayfa geçişlerinde liste elemanlarının bölünmesini engelle */
+            .doc ul.clean {
+                page-break-inside: auto !important;
+            }
+            
+            .doc ul.clean li {
+                page-break-inside: avoid !important;
+                page-break-after: auto !important;
+            }
+            
+            /* Başlıkların sayfa sonunda yalnız kalmasını engelle */
+            .doc .section-title {
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            
+            /* En az 3 liste elemanı başlıkla aynı sayfada kalsın */
+            .doc .section-title + ul.clean li:nth-child(-n+3) {
+                page-break-before: avoid !important;
+            }
+
+            .doc::after {
+                content: "" !important;
+                display: block !important;
+                height: 0 !important;
+                clear: both !important;
+                page-break-after: avoid !important;
+            }
+
+            .doc .footer {
+                border-top: none !important;
+                margin-top: 20px !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            .footer-line {
+                display: none !important;
+            }
+
+            .hl {
+                background: #f0f4f8 !important;
+                border: 1px solid #000 !important;
+                padding: 3px 6px !important;
+                border-radius: 4px !important;
+                font-weight: 700 !important;
+            }
+            
+            .doc .right .hl {
+                background: white !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            
+            @page :first {
+                margin: 0;
+            }
+            
+            @page :left {
+                margin-top: 25mm;
+                margin-bottom: 20mm;
+                
+                @bottom-center {
+                    content: counter(page);
+                    font-family: 'Times New Roman', serif;
+                    font-size: 12px;
+                    color: #666;
+                }
+            }
+            
+            @page :right {
+                margin-top: 25mm;
+                margin-bottom: 20mm;
+                
+                @bottom-center {
+                    content: counter(page);
+                    font-family: 'Times New Roman', serif;
+                    font-size: 12px;
+                    color: #666;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- SOL: FORM -->
+        <section class="panel" id="formPanel">
+            <h1>Form</h1>
+            <div class="grid">
+                <div><label>Tarih</label><input type="date" id="inpDate" /></div>
+                <div><label>Ülke (Bayrak)</label><input type="text" id="inpCountry" placeholder="Örn: LİBERYA" /></div>
+                <div><label>IMO Numarası</label><input type="text" id="inpIMO" placeholder="Örn: 9522269" /></div>
+                <div><label>Gemi Adı</label><input type="text" id="inpVessel" placeholder="Örn: M/T GAS TRUST" /></div>
+                <div><label>Liman</label><input type="text" id="inpPort" placeholder="Örn: Petkim/Aliağa" /></div>
+                <div><label>Şirket Adı</label><input type="text" id="inpCompany" placeholder="Örn: EKİM TUR" /></div>
+            </div>
+
+
+            <h2>Personel</h2>
+            <div id="people"></div>
+
+            <div class="divider"></div>
+
+            <h2>Araç Plakaları</h2>
+            <div id="plates"></div>
+
+            <div class="divider"></div>
+            <button class="btn" onclick="printDocument()">PDF'e aktar / Yazdır</button>
+        </section>
+
+        <!-- SAĞ: ÖNİZLEME -->
+        <section class="doc panel" id="docPanel" aria-label="Belge Önizleme">
+            <header class="doc-header">
+                <h3>S E L İ M</h3>
+                <div class="subh">Denizcilik, Nakliyat, Gemicilik<br />Sanayi Ticaret Limited Şirketi</div>
+            </header>
+
+            <div class="addr">
+                <div>T.C.<br />
+                    GÜMRÜK VE TİCARET BAKANLIĞI<br />
+                    EGE GÜMRÜK VE TİCARET BÖLGE MÜDÜRLÜĞÜ<br />
+                    ALİAĞA GÜMRÜK MÜDÜRLÜĞÜ<br />
+                    İSKELELER GÜMRÜK MUHAFAZA KISIM AMİRLİĞİ
+                </div>
+                <div class="right" id="vDateWrap" style="display:none;">TARİH<br /><span class="hl" id="vDate"></span>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <p id="mainPara">
+                Armatör acenteliğimize bağlı
+                <span id="vCountry" style="display:none"></span><span id="vCountryTail" style="display:none">
+                    bayraklı</span>
+                <span id="vIMO" style="display:none"></span><span id="vIMOTail" style="display:none"> IMO
+                    numaralı</span>
+                <span id="vVessel" style="display:none"></span><span id="vVesselTail" style="display:none"> isimli
+                    gemiden</span>
+                <span id="vPort" style="display:none"></span><span id="vPortTail" style="display:none"> limanına
+                    yanaşmasına müteakip</span>
+                personel değişikliği yapılacak olup personelin gemiden transferi
+                <b id="vCompany" style="display:none"></b><span id="vCompanyTail" style="display:none"> şirketi
+                    tarafından yapılacaktır.</span>
+                Limana giriş-çıkış yapacak personel ve araç bilgileri aşağıda tarafınıza sunulmuştur,
+                gerekli izinlerin verilmesini arz ederiz.
+            </p>
+
+            <div class="sign">Saygılarımızla,</div>
+
+            <div class="section-title"><span id="vCompanyName"></span> PERSONEL ADI / TC. KİMLİK NO</div>
+            <ul class="clean" id="vPeople"></ul>
+
+            <div class="section-title">ARAÇ PLAKALARI</div>
+            <ul class="clean" id="vPlates"></ul>
+
+            <div class="footer">
+                <div class="footer-line">_______________________________________</div>
+                1443 Sk. No: 148 Kat: 5 D:503 – 504 Alsancak – İZMİR –TÜRKİYE<br />
+                Tel: 0.232. 464 47 11 (PBX) Fax: 0.232 464 18 31 – 464 32 71<br />
+                Telex: 51133 Tic. Sic. No.:Merkez 89899
+            </div>
+            <!-- Boş sayfa engelleyici -->
+            <div style="height: 1px; overflow: hidden; page-break-after: avoid !important; visibility: hidden;">&nbsp;</div>
+        </section>
+    </div>
+
+    <script>
+        const peopleWrap = document.querySelector('#people');
+        const platesWrap = document.querySelector('#plates');
+        const vPeople = document.querySelector('#vPeople');
+        const vPlates = document.querySelector('#vPlates');
+
+        function personRow(name = '', tc = '') {
+            const row = document.createElement('div');
+            row.className = 'row';
+            const i1 = document.createElement('input'); i1.type = 'text'; i1.placeholder = 'Ad Soyad'; i1.value = name;
+            const i2 = document.createElement('input'); i2.type = 'text'; i2.placeholder = 'TC No / Maskele'; i2.className = 'tc'; i2.value = tc;
+            row.append(i1, i2);
+
+            // Otomatik satır ekleme mantığı
+            [i1, i2].forEach(el => {
+                el.addEventListener('input', () => {
+                    render();
+                    // Eğer bu satırın her iki alanı da doluysa ve son satırsa, yeni satır ekle
+                    if (i1.value.trim() && i2.value.trim() && row === peopleWrap.lastElementChild) {
+                        peopleWrap.append(personRow());
+                    }
+                });
+            });
+
+            return row;
+        }
+        function plateRow(pl = '') {
+            const row = document.createElement('div');
+            row.className = 'row';
+            const i = document.createElement('input');
+            i.type = 'text';
+            i.placeholder = 'Plaka (örn. 35 ABC 123)';
+            i.value = pl;
+            row.append(i);
+
+            // Otomatik satır ekleme mantığı
+            i.addEventListener('input', () => {
+                render();
+                // Eğer bu satır doluysa ve son satırsa, yeni satır ekle
+                if (i.value.trim() && row === platesWrap.lastElementChild) {
+                    platesWrap.append(plateRow());
+                }
+            });
+
+            return row;
+        }
+
+        function setHL(idBase, value, makeBold = false) {
+            const el = document.querySelector(idBase);
+            const tail = document.querySelector(idBase + 'Tail');
+            if (!el) return;
+            if (value && value.trim()) {
+                el.textContent = value.trim();
+                if (makeBold) el.style.fontWeight = '700';
+                if (idBase !== '#vCompany') el.classList.add('hl'); // company bold, diğerleri highlight
+                el.style.display = 'inline';
+                if (tail) tail.style.display = 'inline';
+            } else {
+                el.textContent = '';
+                el.style.display = 'none';
+                if (tail) tail.style.display = 'none';
+            }
+        }
+        function setTitle(wrapperSel, textSel, value) {
+            const wrap = document.querySelector(wrapperSel);
+            const el = document.querySelector(textSel);
+            if (value && value.trim()) {
+                el.textContent = value.trim();
+                wrap.style.display = 'block';
+            } else {
+                el.textContent = ''; wrap.style.display = 'none';
+            }
+        }
+        function setDate(valueISO) {
+            const wrap = document.querySelector('#vDateWrap');
+            const out = document.querySelector('#vDate');
+            if (valueISO) {
+                const [y, m, d] = valueISO.split('-');
+                out.textContent = `${d ? d.padStart(2, '0') + '.' : ''}${m.padStart(2, '0')}.${y}`;
+                wrap.style.display = 'block';
+            } else { out.textContent = ''; wrap.style.display = 'none'; }
+        }
+        function escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m])); }
+
+        function render() {
+            // Üst alanlar
+            setDate(document.querySelector('#inpDate').value || '');
+            setHL('#vCountry', document.querySelector('#inpCountry').value);
+            setHL('#vIMO', document.querySelector('#inpIMO').value);
+            setHL('#vVessel', document.querySelector('#inpVessel').value);
+            setHL('#vPort', document.querySelector('#inpPort').value);
+            setHL('#vCompany', document.querySelector('#inpCompany').value, true);
+
+            // Şirket adını başlığa ekle
+            const companyName = document.querySelector('#inpCompany').value.trim();
+            const companyNameSpan = document.querySelector('#vCompanyName');
+            if (companyName) {
+                companyNameSpan.textContent = companyName + ' ';
+                companyNameSpan.style.display = 'inline';
+            } else {
+                companyNameSpan.textContent = '';
+                companyNameSpan.style.display = 'none';
+            }
+
+            // Personel listesi
+            vPeople.innerHTML = '';
+            [...peopleWrap.children].forEach(r => {
+                const [n, t] = r.querySelectorAll('input');
+                if (n.value.trim() || t.value.trim()) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<b>${escapeHtml(n.value.trim())}</b>  -  <span class="hl">${escapeHtml(t.value.trim())}</span>`;
+                    vPeople.append(li);
+                }
+            });
+
+            // Plakalar
+            vPlates.innerHTML = '';
+            [...platesWrap.children].forEach(r => {
+                const i = r.querySelector('input');
+                if (i.value.trim()) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="hl">${escapeHtml(i.value.trim())}</span>`;
+                    vPlates.append(li);
+                }
+            });
+        }
+
+        // Başlangıçta birer tane boş satır
+        peopleWrap.append(personRow());
+        platesWrap.append(plateRow());
+
+
+        // Canlı render bağla
+        ['#inpDate', '#inpCountry', '#inpIMO', '#inpVessel', '#inpPort', '#inpCompany']
+            .forEach(sel => { const el = document.querySelector(sel);['input', 'change'].forEach(evt => el.addEventListener(evt, render)); });
+
+        render(); // ilk (boş) render
+
+        // Print fonksiyonu
+        function printDocument() {
+            // Önce render'ı çalıştır
+            render();
+
+            // Yazdırma için özel stil ekle
+            const style = document.createElement('style');
+            style.id = 'print-style';
+            style.textContent = `
+                @media print {
+                    @page {
+                        size: A4;
+                        margin: 0;
+                    }
+                    
+                    @page :first {
+                        margin: 0;
+                    }
+                    
+                    @page :left {
+                        margin-top: 25mm;
+                        margin-bottom: 20mm;
+                    }
+                    
+                    @page :right {
+                        margin-top: 25mm;
+                        margin-bottom: 20mm;
+                    }
+                    
+                    html {
+                        height: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+                    
+                    body {
+                        height: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        overflow: hidden !important;
+                    }
+                    
+                    .wrap {
+                        height: fit-content !important;
+                        min-height: auto !important;
+                        max-height: none !important;
+                    }
+                    
+                    .doc {
+                        height: fit-content !important;
+                        min-height: auto !important;
+                        max-height: none !important;
+                        page-break-after: avoid !important;
+                        page-break-inside: auto !important;
+                        position: relative !important;
+                        overflow: visible !important;
+                        margin-bottom: 0 !important;
+                        padding: 25mm 20mm !important;
+                    }
+                    
+                    /* Sayfa geçişlerinde liste elemanlarının düzgün görünmesi */
+                    .doc ul.clean {
+                        page-break-inside: auto !important;
+                    }
+                    
+                    .doc ul.clean li {
+                        page-break-inside: avoid !important;
+                        orphans: 2 !important;
+                        widows: 2 !important;
+                    }
+                    
+                    .doc .section-title {
+                        page-break-after: avoid !important;
+                        page-break-inside: avoid !important;
+                    }
+                    
+                    /* Son element'ten sonra sayfa kesmeyi engelle */
+                    .doc > *:last-child {
+                        page-break-after: avoid !important;
+                        margin-bottom: 0 !important;
+                        padding-bottom: 0 !important;
+                    }
+                    
+                    /* Boş sayfa oluşmasını engelle */
+                    .doc::after {
+                        content: "" !important;
+                        display: block !important;
+                        height: 0 !important;
+                        page-break-after: avoid !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Belgeyi yazdırmadan önce yükseklik ayarlarını temizle
+            const docElement = document.querySelector('.doc');
+            
+            // Eski stil ayarlarını temizle
+            docElement.style.removeProperty('height');
+            docElement.style.removeProperty('maxHeight');
+            docElement.style.removeProperty('minHeight');
+            
+            // Belge sonuna boş sayfa engelleyici ekle
+            const pageBreakPreventer = document.createElement('div');
+            pageBreakPreventer.style.cssText = 'height: 0; overflow: hidden; page-break-after: avoid; position: absolute; bottom: 0;';
+            docElement.appendChild(pageBreakPreventer);
+
+            // Kısa bir gecikme sonra print
+            setTimeout(() => {
+                window.print();
+                // Yazdırma sonrası temizlik
+                setTimeout(() => {
+                    const printStyle = document.getElementById('print-style');
+                    if (printStyle) printStyle.remove();
+                    if (pageBreakPreventer && pageBreakPreventer.parentNode) {
+                        pageBreakPreventer.remove();
+                    }
+                }, 500);
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>
