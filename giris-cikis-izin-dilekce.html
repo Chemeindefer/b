@@ -136,6 +136,7 @@
             font-size: 14px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             box-sizing: border-box;
+            position: relative;
         }
 
         .doc p {
@@ -150,33 +151,47 @@
         .doc h3 {
             margin: 0;
             text-align: center;
-            letter-spacing: 8px;
-            font-size: 26px;
+            letter-spacing: 10px;
+            font-size: 28px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             font-family: 'Times New Roman', 'Times', serif;
             text-transform: uppercase;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .doc h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: #000;
         }
 
         .doc .subh {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 600;
             text-align: center;
-            margin: 0 0 24px;
-            color: #2c2c2c;
-            line-height: 1.4;
+            margin: 0 0 32px;
+            color: #1a1a1a;
+            line-height: 1.5;
             font-family: 'Times New Roman', 'Times', serif;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .doc .addr {
-            margin: 24px 0;
+            margin: 32px 0;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.8;
             font-family: 'Times New Roman', 'Times', serif;
             font-weight: 500;
+            position: relative;
         }
 
         .doc .right {
@@ -187,39 +202,47 @@
             font-family: 'Times New Roman', 'Times', serif;
             color: #000;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            border: 2px solid #000;
+            padding: 8px 12px;
+            background: #f8f9fa;
         }
 
         .hl {
-            background: #f8f9fa;
-            padding: 2px 4px;
-            border-radius: 3px;
+            background: #f0f4f8;
+            padding: 3px 6px;
+            border-radius: 4px;
             font-weight: 600;
             color: #000;
-            border: 1px solid #dee2e6;
+            border: 1px solid #d1d9e0;
             font-size: 14px;
+            display: inline-block;
+            margin: 0 2px;
         }
 
-        @media print {
-            .hl {
-                background: transparent !important;
-                border: none !important;
-                padding: 0 !important;
-                border-radius: 0 !important;
+            @media print {
+                .hl {
+                    background: #f0f4f8 !important;
+                    border: 1px solid #000 !important;
+                    padding: 3px 6px !important;
+                    border-radius: 4px !important;
+                    font-weight: 700 !important;
+                }
             }
-        }
 
         .section-title {
             font-weight: 700;
             text-transform: uppercase;
-            margin: 28px 0 14px;
-            font-size: 15px;
+            margin: 36px 0 20px;
+            font-size: 16px;
             text-align: center;
             color: #000;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 8px;
+            letter-spacing: 1.5px;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
             font-family: 'Times New Roman', 'Times', serif;
+            position: relative;
+            page-break-inside: avoid;
         }
 
         ul.clean {
@@ -229,39 +252,56 @@
         }
 
         ul.clean li {
-            margin: 8px 0;
-            padding: 4px 0;
+            margin: 10px 0;
+            padding: 6px 0;
             font-size: 14px;
             font-family: 'Times New Roman', 'Times', serif;
-            line-height: 1.6;
+            line-height: 1.8;
             font-weight: 500;
+            border-bottom: 1px dotted #e0e0e0;
+            page-break-inside: avoid;
+        }
+        
+        ul.clean li:last-child {
+            border-bottom: none;
         }
 
         .sign {
-            margin-top: 32px;
+            margin-top: 40px;
             text-align: right;
             font-style: italic;
-            font-size: 14px;
+            font-size: 15px;
             font-family: 'Times New Roman', 'Times', serif;
             font-weight: 600;
-            color: #333;
+            color: #1a1a1a;
+            letter-spacing: 0.5px;
         }
 
         .footer {
-            margin-top: 32px;
+            margin-top: 48px;
             font-size: 12px;
-            color: #555;
+            color: #444;
             text-align: center;
-            padding-top: 16px;
+            padding: 20px;
             font-family: 'Times New Roman', 'Times', serif;
-            line-height: 1.5;
+            line-height: 1.6;
             font-weight: 500;
             page-break-after: avoid !important;
+            page-break-inside: avoid !important;
+            border-top: 2px solid #e0e0e0;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
 
         .footer-line {
             text-align: center;
             margin-top: 12px;
+        }
+        
+        .doc-header {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 3px double #000;
         }
 
         @media print {
@@ -321,8 +361,29 @@
                 color: black !important;
                 overflow: visible !important;
                 page-break-after: avoid !important;
-                page-break-inside: avoid !important;
+                page-break-inside: auto !important;
                 position: relative !important;
+            }
+            
+            /* Sayfa geçişlerinde liste elemanlarının bölünmesini engelle */
+            .doc ul.clean {
+                page-break-inside: auto !important;
+            }
+            
+            .doc ul.clean li {
+                page-break-inside: avoid !important;
+                page-break-after: auto !important;
+            }
+            
+            /* Başlıkların sayfa sonunda yalnız kalmasını engelle */
+            .doc .section-title {
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            
+            /* En az 3 liste elemanı başlıkla aynı sayfada kalsın */
+            .doc .section-title + ul.clean li:nth-child(-n+3) {
+                page-break-before: avoid !important;
             }
 
             .doc::after {
@@ -345,15 +406,50 @@
             }
 
             .hl {
-                background: transparent !important;
+                background: #f0f4f8 !important;
+                border: 1px solid #000 !important;
+                padding: 3px 6px !important;
+                border-radius: 4px !important;
+                font-weight: 700 !important;
+            }
+            
+            .doc .right .hl {
+                background: white !important;
                 border: none !important;
                 padding: 0 !important;
-                border-radius: 0 !important;
             }
 
             @page {
                 size: A4;
                 margin: 0;
+            }
+            
+            @page :first {
+                margin: 0;
+            }
+            
+            @page :left {
+                margin-top: 25mm;
+                margin-bottom: 20mm;
+                
+                @bottom-center {
+                    content: counter(page);
+                    font-family: 'Times New Roman', serif;
+                    font-size: 12px;
+                    color: #666;
+                }
+            }
+            
+            @page :right {
+                margin-top: 25mm;
+                margin-bottom: 20mm;
+                
+                @bottom-center {
+                    content: counter(page);
+                    font-family: 'Times New Roman', serif;
+                    font-size: 12px;
+                    color: #666;
+                }
             }
         }
     </style>
@@ -388,8 +484,10 @@
 
         <!-- SAĞ: ÖNİZLEME -->
         <section class="doc panel" id="docPanel" aria-label="Belge Önizleme">
-            <h3>S E L İ M</h3>
-            <div class="subh">Denizcilik, Nakliyat, Gemicilik<br />Sanayi Ticaret Limited Şirketi</div>
+            <header class="doc-header">
+                <h3>S E L İ M</h3>
+                <div class="subh">Denizcilik, Nakliyat, Gemicilik<br />Sanayi Ticaret Limited Şirketi</div>
+            </header>
 
             <div class="addr">
                 <div>T.C.<br />
@@ -592,6 +690,20 @@
                         margin: 0;
                     }
                     
+                    @page :first {
+                        margin: 0;
+                    }
+                    
+                    @page :left {
+                        margin-top: 25mm;
+                        margin-bottom: 20mm;
+                    }
+                    
+                    @page :right {
+                        margin-top: 25mm;
+                        margin-bottom: 20mm;
+                    }
+                    
                     html {
                         height: 100% !important;
                         margin: 0 !important;
@@ -618,9 +730,25 @@
                         page-break-after: avoid !important;
                         page-break-inside: auto !important;
                         position: relative !important;
-                        overflow: hidden !important;
+                        overflow: visible !important;
                         margin-bottom: 0 !important;
-                        padding-bottom: 20mm !important;
+                        padding: 25mm 20mm !important;
+                    }
+                    
+                    /* Sayfa geçişlerinde liste elemanlarının düzgün görünmesi */
+                    .doc ul.clean {
+                        page-break-inside: auto !important;
+                    }
+                    
+                    .doc ul.clean li {
+                        page-break-inside: avoid !important;
+                        orphans: 2 !important;
+                        widows: 2 !important;
+                    }
+                    
+                    .doc .section-title {
+                        page-break-after: avoid !important;
+                        page-break-inside: avoid !important;
                     }
                     
                     /* Son element'ten sonra sayfa kesmeyi engelle */
