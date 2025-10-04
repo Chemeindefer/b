@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş-Çıkış İzin Dilekçesi — Form & Önizleme</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --card: #131a22;
+            --muted: #8aa0b3;
+            --text: #e6eef7;
+            --accent: #39c3a5;
+            --yellow: #fff59d;
+            --border: #223042;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 20px;
+            padding: 20px;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .25)
+        }
+
+        h1 {
+            font-size: 18px;
+            margin: 0 0 12px
+        }
+
+        h2 {
+            font-size: 14px;
+            margin: 16px 0 8px;
+            color: var(--muted);
+            letter-spacing: .2px
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin: 10px 0 6px
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #0e141b;
+            color: var(--text);
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #6f8396
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #0f1720;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn.small {
+            padding: 6px 10px;
+            font-size: 12px
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .row>input {
+            flex: 1
+        }
+
+        .row>input.tc {
+            flex: 0 0 160px
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 14px 0
+        }
+
+        .doc {
+            background: white;
+            color: #1a1a1a;
+            border-radius: 8px;
+            padding: 25mm 20mm;
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 210mm;
+            margin: 0 auto;
+            overflow: auto;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.6;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+
+        .doc p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 18px 0;
+            text-align: justify;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-indent: 1.2em;
+        }
+
+        .doc h3 {
+            margin: 0;
+            text-align: center;
+            letter-spacing: 8px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 12px;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-transform: uppercase;
+        }
+
+        .doc .subh {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin: 0 0 24px;
+            color: #2c2c2c;
+            line-height: 1.4;
+            font-family: 'Times New Roman', 'Times', serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .doc .addr {
+            margin: 24px 0;
+            font-size: 14px;
+            line-height: 1.6;
+            font-family: 'Times New Roman', 'Times', serif;
+            font-weight: 500;
+        }
+
+        .doc .right {
+            float: right;
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Times New Roman', 'Times', serif;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .hl {
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #000;
+            border: 1px solid #dee2e6;
+            font-size: 14px;
+        }
+
+        @media print {
+            .hl {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+        }
+
+        .section-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 28px 0 14px;
+            font-size: 15px;
+            text-align: center;
+            color: #000;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 8px;
+            font-family: 'Times New Roman', 'Times', serif;
+        }
+
+        ul.clean {
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        ul.clean li {
+            margin: 8px 0;
+            padding: 4px 0;
+            font-size: 14px;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .sign {
+            margin-top: 32px;
+            text-align: right;
+            font-style: italic;
+            font-size: 14px;
+            font-family: 'Times New Roman', 'Times', serif;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            padding-top: 16px;
+            font-family: 'Times New Roman', 'Times', serif;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .footer-line {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html,
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            .wrap {
+                display: block !important;
+                padding: 0 !important;
+                max-width: none !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .panel {
+                display: none !important;
+            }
+
+            .doc {
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                min-height: auto !important;
+                height: auto !important;
+                padding: 25mm 20mm !important;
+                width: 210mm !important;
+                max-width: 210mm !important;
+                margin: 0 auto !important;
+                display: block !important;
+                background: white !important;
+                color: black !important;
+                overflow: visible !important;
+                page-break-after: auto !important;
+                page-break-inside: auto !important;
+            }
+
+            .doc .footer {
+                border-top: none !important;
+                margin-top: 20px !important;
+                page-break-inside: avoid !important;
+            }
+
+            .footer-line {
+                display: none !important;
+            }
+
+            .hl {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            /* Sadece ilk sayfa için özel ayar */
+            @page :first {
+                margin: 0;
+            }
+
+            /* Son sayfadan sonra boş sayfa oluşmasını engelle */
+            html::after,
+            body::after {
+                content: none !important;
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- SOL: FORM -->
+        <section class="panel" id="formPanel">
+            <h1>Form</h1>
+            <div class="grid">
+                <div><label>Tarih</label><input type="date" id="inpDate" /></div>
+                <div><label>Ülke (Bayrak)</label><input type="text" id="inpCountry" placeholder="Örn: LİBERYA" /></div>
+                <div><label>IMO Numarası</label><input type="text" id="inpIMO" placeholder="Örn: 9522269" /></div>
+                <div><label>Gemi Adı</label><input type="text" id="inpVessel" placeholder="Örn: M/T GAS TRUST" /></div>
+                <div><label>Liman</label><input type="text" id="inpPort" placeholder="Örn: Petkim/Aliağa" /></div>
+                <div><label>Şirket Adı</label><input type="text" id="inpCompany" placeholder="Örn: EKİM TUR" /></div>
+            </div>
+
+
+            <h2>Personel</h2>
+            <div id="people"></div>
+
+            <div class="divider"></div>
+
+            <h2>Araç Plakaları</h2>
+            <div id="plates"></div>
+
+            <div class="divider"></div>
+            <button class="btn" onclick="printDocument()">PDF'e aktar / Yazdır</button>
+        </section>
+
+        <!-- SAĞ: ÖNİZLEME -->
+        <section class="doc panel" id="docPanel" aria-label="Belge Önizleme">
+            <h3>S E L İ M</h3>
+            <div class="subh">Denizcilik, Nakliyat, Gemicilik<br />Sanayi Ticaret Limited Şirketi</div>
+
+            <div class="addr">
+                <div>T.C.<br />
+                    GÜMRÜK VE TİCARET BAKANLIĞI<br />
+                    EGE GÜMRÜK VE TİCARET BÖLGE MÜDÜRLÜĞÜ<br />
+                    ALİAĞA GÜMRÜK MÜDÜRLÜĞÜ<br />
+                    İSKELELER GÜMRÜK MUHAFAZA KISIM AMİRLİĞİ
+                </div>
+                <div class="right" id="vDateWrap" style="display:none;">TARİH<br /><span class="hl" id="vDate"></span>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <p id="mainPara">
+                Armatör acenteliğimize bağlı
+                <span id="vCountry" style="display:none"></span><span id="vCountryTail" style="display:none">
+                    bayraklı</span>
+                <span id="vIMO" style="display:none"></span><span id="vIMOTail" style="display:none"> IMO
+                    numaralı</span>
+                <span id="vVessel" style="display:none"></span><span id="vVesselTail" style="display:none"> isimli
+                    gemiden</span>
+                <span id="vPort" style="display:none"></span><span id="vPortTail" style="display:none"> limanına
+                    yanaşmasına müteakip</span>
+                personel değişikliği yapılacak olup personelin gemiden transferi
+                <b id="vCompany" style="display:none"></b><span id="vCompanyTail" style="display:none"> şirketi
+                    tarafından yapılacaktır.</span>
+                Limana giriş-çıkış yapacak personel ve araç bilgileri aşağıda tarafınıza sunulmuştur,
+                gerekli izinlerin verilmesini arz ederiz.
+            </p>
+
+            <div class="sign">Saygılarımızla,</div>
+
+            <div class="section-title"><span id="vCompanyName"></span> PERSONEL ADI / TC. KİMLİK NO</div>
+            <ul class="clean" id="vPeople"></ul>
+
+            <div class="section-title">ARAÇ PLAKALARI</div>
+            <ul class="clean" id="vPlates"></ul>
+
+            <div class="footer">
+                <div class="footer-line">_______________________________________</div>
+                1443 Sk. No: 148 Kat: 5 D:503 – 504 Alsancak – İZMİR –TÜRKİYE<br />
+                Tel: 0.232. 464 47 11 (PBX) Fax: 0.232 464 18 31 – 464 32 71<br />
+                Telex: 51133 Tic. Sic. No.:Merkez 89899
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const peopleWrap = document.querySelector('#people');
+        const platesWrap = document.querySelector('#plates');
+        const vPeople = document.querySelector('#vPeople');
+        const vPlates = document.querySelector('#vPlates');
+
+        function personRow(name = '', tc = '') {
+            const row = document.createElement('div');
+            row.className = 'row';
+            const i1 = document.createElement('input'); i1.type = 'text'; i1.placeholder = 'Ad Soyad'; i1.value = name;
+            const i2 = document.createElement('input'); i2.type = 'text'; i2.placeholder = 'TC No / Maskele'; i2.className = 'tc'; i2.value = tc;
+            row.append(i1, i2);
+
+            // Otomatik satır ekleme mantığı
+            [i1, i2].forEach(el => {
+                el.addEventListener('input', () => {
+                    render();
+                    // Eğer bu satırın her iki alanı da doluysa ve son satırsa, yeni satır ekle
+                    if (i1.value.trim() && i2.value.trim() && row === peopleWrap.lastElementChild) {
+                        peopleWrap.append(personRow());
+                    }
+                });
+            });
+
+            return row;
+        }
+        function plateRow(pl = '') {
+            const row = document.createElement('div');
+            row.className = 'row';
+            const i = document.createElement('input');
+            i.type = 'text';
+            i.placeholder = 'Plaka (örn. 35 ABC 123)';
+            i.value = pl;
+            row.append(i);
+
+            // Otomatik satır ekleme mantığı
+            i.addEventListener('input', () => {
+                render();
+                // Eğer bu satır doluysa ve son satırsa, yeni satır ekle
+                if (i.value.trim() && row === platesWrap.lastElementChild) {
+                    platesWrap.append(plateRow());
+                }
+            });
+
+            return row;
+        }
+
+        function setHL(idBase, value, makeBold = false) {
+            const el = document.querySelector(idBase);
+            const tail = document.querySelector(idBase + 'Tail');
+            if (!el) return;
+            if (value && value.trim()) {
+                el.textContent = value.trim();
+                if (makeBold) el.style.fontWeight = '700';
+                if (idBase !== '#vCompany') el.classList.add('hl'); // company bold, diğerleri highlight
+                el.style.display = 'inline';
+                if (tail) tail.style.display = 'inline';
+            } else {
+                el.textContent = '';
+                el.style.display = 'none';
+                if (tail) tail.style.display = 'none';
+            }
+        }
+        function setTitle(wrapperSel, textSel, value) {
+            const wrap = document.querySelector(wrapperSel);
+            const el = document.querySelector(textSel);
+            if (value && value.trim()) {
+                el.textContent = value.trim();
+                wrap.style.display = 'block';
+            } else {
+                el.textContent = ''; wrap.style.display = 'none';
+            }
+        }
+        function setDate(valueISO) {
+            const wrap = document.querySelector('#vDateWrap');
+            const out = document.querySelector('#vDate');
+            if (valueISO) {
+                const [y, m, d] = valueISO.split('-');
+                out.textContent = `${d ? d.padStart(2, '0') + '.' : ''}${m.padStart(2, '0')}.${y}`;
+                wrap.style.display = 'block';
+            } else { out.textContent = ''; wrap.style.display = 'none'; }
+        }
+        function escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m])); }
+
+        function render() {
+            // Üst alanlar
+            setDate(document.querySelector('#inpDate').value || '');
+            setHL('#vCountry', document.querySelector('#inpCountry').value);
+            setHL('#vIMO', document.querySelector('#inpIMO').value);
+            setHL('#vVessel', document.querySelector('#inpVessel').value);
+            setHL('#vPort', document.querySelector('#inpPort').value);
+            setHL('#vCompany', document.querySelector('#inpCompany').value, true);
+
+            // Şirket adını başlığa ekle
+            const companyName = document.querySelector('#inpCompany').value.trim();
+            const companyNameSpan = document.querySelector('#vCompanyName');
+            if (companyName) {
+                companyNameSpan.textContent = companyName + ' ';
+                companyNameSpan.style.display = 'inline';
+            } else {
+                companyNameSpan.textContent = '';
+                companyNameSpan.style.display = 'none';
+            }
+
+            // Personel listesi
+            vPeople.innerHTML = '';
+            [...peopleWrap.children].forEach(r => {
+                const [n, t] = r.querySelectorAll('input');
+                if (n.value.trim() || t.value.trim()) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<b>${escapeHtml(n.value.trim())}</b>  -  <span class="hl">${escapeHtml(t.value.trim())}</span>`;
+                    vPeople.append(li);
+                }
+            });
+
+            // Plakalar
+            vPlates.innerHTML = '';
+            [...platesWrap.children].forEach(r => {
+                const i = r.querySelector('input');
+                if (i.value.trim()) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="hl">${escapeHtml(i.value.trim())}</span>`;
+                    vPlates.append(li);
+                }
+            });
+        }
+
+        // Başlangıçta birer tane boş satır
+        peopleWrap.append(personRow());
+        platesWrap.append(plateRow());
+
+
+        // Canlı render bağla
+        ['#inpDate', '#inpCountry', '#inpIMO', '#inpVessel', '#inpPort', '#inpCompany']
+            .forEach(sel => { const el = document.querySelector(sel);['input', 'change'].forEach(evt => el.addEventListener(evt, render)); });
+
+        render(); // ilk (boş) render
+
+        // Print fonksiyonu
+        function printDocument() {
+            // Önce render'ı çalıştır
+            render();
+
+            // Belgeyi yazdırmadan önce yükseklik ayarlarını temizle
+            const docElement = document.querySelector('.doc');
+            
+            // Eski stil ayarlarını temizle
+            docElement.style.removeProperty('height');
+            docElement.style.removeProperty('maxHeight');
+            docElement.style.removeProperty('minHeight');
+
+            // Kısa bir gecikme sonra print
+            setTimeout(() => {
+                window.print();
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>
